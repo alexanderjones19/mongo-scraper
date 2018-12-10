@@ -18,8 +18,6 @@ app.use(express.static('public'));
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/articlesdb';
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-console.log('mongodob', MONGODB_URI);
-
 
 app.get('/scrape', function(req, res) {
   console.log('scrape route');
@@ -41,16 +39,9 @@ app.get('/scrape', function(req, res) {
         .catch(function(err) {
           console.log(err);
         });
-
-      
-
     });
     res.send('Scrape Complete');
   });
-});
-
-app.get('/status', function(req, res) {
-  res.send('Okay');
 });
 
 app.get('/articles', function(req, res) {

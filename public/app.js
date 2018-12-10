@@ -20,7 +20,7 @@ $.getJSON('/articles', function(data) {
   }
 });
 
-$(document).on('click', 'p', function() {
+$(document).on('click', '.title', function() {
   $('#notes').empty();
   let thisId = $(this).attr('data-id');
 
