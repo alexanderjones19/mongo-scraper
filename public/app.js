@@ -4,7 +4,7 @@ $.getJSON('/articles', function(data) {
       `<div class="tile is-parent">
         <article class="tile is-child notification is-info">
           <div class="content">
-            <p data-id=${ data[i]._id } class="title">${ data[i].title }</p>
+            <p data-id=${ data[i]._id } class="title title-click">${ data[i].title }</p>
             <span class="subtitle">
               <a target="_blank" href=${ data[i].link }>
               ${ data[i].link }
@@ -20,7 +20,7 @@ $.getJSON('/articles', function(data) {
   }
 });
 
-$(document).on('click', '.title', function() {
+$(document).on('click', '.title-click', function() {
   $('#notes').empty();
   let thisId = $(this).attr('data-id');
 
