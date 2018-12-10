@@ -49,6 +49,10 @@ app.get('/scrape', function(req, res) {
   });
 });
 
+app.get('/status', function(req, res) {
+  res.send('Okay');
+});
+
 app.get('/articles', function(req, res) {
   db.Article.find({})
     .then(function(dbArticle) {
