@@ -28,6 +28,10 @@ $(document).on('click', 'p', function() {
     method: 'GET',
     url: '/articles/' + thisId
   }).then(function(data) {
+    let bodyText = '';
+    if (data.body) {
+      bodyText = data.body;
+    }
     console.log(data);
     $('#notes').append(
       `<div class="tile is-parent">
@@ -37,11 +41,15 @@ $(document).on('click', 'p', function() {
             <div class="content">
               <div class="field">
                 <div class="control">
-                  <input id="title-input" class="input is-info" type="text" placeholder="Info input">
+                  <input id="title-input" class="input is-info" type="text" placeholder="Note Title">
                 </div>
+              </div>
+              <div class="field">
                 <div class="control">
-                  <textarea id="body-input" class="textarea is-info" placeholder="Info textarea">${ data.body }</textarea>
+                  <textarea id="body-input" class="textarea is-info" placeholder=${ bodyText }></textarea>
                 </div>
+              </div>
+              <div class="field">
                 <div class="control">
                   <button id="save-note" class="button is-link" data-id=${ data._id }>Submit</button>
                 </div>
