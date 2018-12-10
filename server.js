@@ -21,9 +21,10 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 
 app.get('/scrape', function(req, res) {
+  console.log('scrape route');
   axios.get('http://www.bbc.com/').then(function(response) {
     const $ = cheerio.load(response.data);
-    console.log('scraped');
+
 
     $("div.media__content").each(function(i, element) {
       let result = {};
