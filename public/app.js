@@ -4,14 +4,14 @@ $.getJSON('/articles', function(data) {
       `<div class="tile is-parent">
         <article class="tile is-child notification is-info">
           <div class="content">
-            <p class="title">${ data[i].title }</p>
-            <p class="subtitle">
+            <p data-id=${ data[i]._id } class="title">${ data[i].title }</p>
+            <span class="subtitle">
               <a target="_blank" href=${ data[i].link }>
               ${ data[i].link }
               </a>
-            </p>
+            </span>
             <div class="content">
-              <p>${ data[i].summary }</p>
+              <p data-id=${ data[i]._id }>${ data[i].summary }</p>
             </div>
           </div>
         </article>
@@ -26,21 +26,55 @@ $(document).on('click', 'p', function() {
 
   $.ajax({
     method: 'GET',
-    url: '/articles' + this.Id
+    url: '/articles/' + thisId
   }).then(function(data) {
-    for (let i = 0; i < data.length; i++) {
-      $('#notes').append(
-        `<div class="tile is-parent">
-          <article class="tile is-child notification is-success">
+    console.log(data);
+    $('#notes').append(
+      `<div class="tile is-parent">
+        <article class="tile is-child notification is-success">
+          <div class="content">
+            <p class="title note-title">${ data.title }</p>
             <div class="content">
-              <p class="title note-title">${ data[i].title }</p>
-              <div class="content">
-                
+              <div class="field">
+                <div class="control">
+                  <input id="title-input" class="input is-info" type="text" placeholder="Info input">
+                </div>
+                <div class="control">
+                  <textarea id="body-input" class="textarea is-info" placeholder="Info textarea">${ data.body }</textarea>
+                </div>
+                <div class="control">
+                  <button id="save-note" class="button is-link" data-id=${ data._id }>Submit</button>
+                </div>
               </div>
             </div>
-          </article>
-        </div>`
-      );
+          </div>
+        </article>
+      </div>`
+    );
+
+    if (data.note) {
+      $('#title-input').val(data.note.title);
+      $('#body-input').val(data.note.body);
     }
   })
+});
+
+$(document).on('click', '#save-note', function() {
+  let thisId = $(this).attr('data-id');
+
+  $.ajax({
+    method: 'POST',
+    url: '/articles/' + thisId,
+    data: {
+      title: $('#title-input').val(),
+      body: $('#body-input').val()
+    }
+  }).then(function(data) {
+      console.log(data);
+
+      $('#notes').empty();
+    });
+
+  $('#title-input').val('');
+  $('#body-input').val('');
 });
