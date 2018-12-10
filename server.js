@@ -18,6 +18,7 @@ app.use(express.static('public'));
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/articlesdb';
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+console.log('mongodob', MONGODB_URI);
 
 
 app.get('/scrape', function(req, res) {
